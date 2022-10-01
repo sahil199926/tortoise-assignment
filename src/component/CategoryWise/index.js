@@ -26,21 +26,19 @@ function Category() {
 
   const fetchPhotos = () => {
     setFetchLoading(true);
-    API.get(
-      `/search/photos/?page=${pageNo}&per_page=${per_page}&query=${catId}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-    )
+    // API.get(
+    //   `/search/photos/?page=${pageNo}&per_page=${per_page}&query=${catId}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+    // )
 
-      // const data = new Promise((resolve, reject) => {
-      //   setTimeout(() => {
-      //     resolve(mockdata);
-      //   }, 1000);
-      // });
-      // data
+      const data = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(mockdata);
+        }, 1000);
+      });
+      data
       .then((res) => {
         setPageNo((p) => p + 1);
-        console.log(pageNo);
-        console.log(res);
-        setPhotos((prev) => [...prev, ...res.data.results]);
+        setPhotos((prev) => [...prev, ...res]);
         setLoading(false);
         setFetchLoading(false);
       })

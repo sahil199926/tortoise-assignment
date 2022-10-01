@@ -21,20 +21,20 @@ function SearchImg() {
 
   // data fetch
   const fetchPhotos = () => {
-     API.get(
-      `/search/photos?page=${pageNo}&per_page=${per_page}&query=${search}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-    )
-    // setFetchLoading(true);
-    // const data = new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     resolve(MockBySearch);
-    //   }, 1000);
-    // });
-    //  data //data.results
+    //  API.get(
+    //   `/search/photos?page=${pageNo}&per_page=${per_page}&query=${search}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+    // )
+    setFetchLoading(true);
+    const data = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(MockBySearch);
+      }, 1000);
+    });
+     data //data.results
       .then((res) => {
         console.log(res);
         setPageNo((p) => p + 1);
-        setPhotos((prev) => [...prev, ...res.data.results]);
+        setPhotos((prev) => [...prev, ...res]);
         setLoading(false);
         setFetchLoading(false);
       })

@@ -7,15 +7,17 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  IconButton,
 } from "@mui/material";
 import ReplyIcon from "@mui/icons-material/Reply";
 import InfoIcon from "@mui/icons-material/Info";
+import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-
+import useCheckSize from "../../Hooks/useChecksize";
 const commonBtnStyle = {
   marginRight: "8px",
   color: "#767676",
@@ -27,6 +29,7 @@ const commonBtnStyle = {
 };
 
 function Idp({ open, setOpen, imageData }) {
+  const size=useCheckSize();
   const handleClose = () => {
     setOpen(false);
   };
@@ -45,16 +48,26 @@ const downloadImage=()=>{
   return (
     <Box component="div" position="relative"> 
       <Dialog
-        sx={{
-          "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
-            minWidth: "85%",
-            minHeight: "720px",
-          },
-        }}
+        fullWidth
+        fullScreen={size<768}
+        width="lg"
+        maxWidth="lg"
         open={open}
         onClose={handleClose}
       >
         <DialogTitle stickyHeader>
+          <Box 
+          onClick={handleClose}
+          sx={{
+            display: size<768?"flex":"none",
+            position: "absolute",
+            right: "10px",
+            color: "#767676",
+            padding: "5px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          ><CloseIcon/></Box>
           <Grid container>
             <Grid item xs={12} sm={6} mt={1} display="flex">
               <Box mr={1}>

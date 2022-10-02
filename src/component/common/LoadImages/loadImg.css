@@ -1,22 +1,52 @@
-.button{
+.button {
     font-size: 14px;
     height: 32px;
     width: 42px;
-   border:none;
-   border-radius: 5px
+    border: none;
+    border-radius: 5px
 }
 
-.leftoverlaycontainer{
+.leftoverlaycontainer {
     display: flex;
     align-items: center;
     text-align: left;
     column-gap: 8px;
 }
 
-.topoverlaycontainer{
+.topoverlaycontainer {
     display: flex;
     font-size: clamp(10px, 1.5vw, 13px);
     justify-content: flex-end;
     column-gap: 10px;
     padding: 15px;
+}
+
+.overlay-mobile-btn {
+    display: none;
+}
+.overlay-mobile-title{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .overlay-mobile-title{
+        display: flex;
+        align-items: center;
+        padding: 5px;
+    }
+    .overlay {
+        display: none;
+    }
+
+    .overlay-mobile-btn {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .button {
+        border: 1px solid rgba(0, 0, 0, 0.248);
+        margin-right: 5px;
+    }
 }

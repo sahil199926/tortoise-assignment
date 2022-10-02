@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
 import API from "../../Api";
 import "../HomePage/homePageStyles.css";
-import {MockBySearch} from "../../mockdata";
 
 import LoadImages from "../common/LoadImages";
 
@@ -17,24 +14,16 @@ function SearchImg() {
   const [loading, setLoading] = useState(true);
   const [fetchLoading, setFetchLoading] = useState(false);
 
-  const navigate = useNavigate();
 
   // data fetch
   const fetchPhotos = () => {
-    //  API.get(
-    //   `/search/photos?page=${pageNo}&per_page=${per_page}&query=${search}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-    // )
-    setFetchLoading(true);
-    const data = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(MockBySearch);
-      }, 1000);
-    });
-     data //data.results
+     setFetchLoading(true);
+     API.get(
+      `/search/photos?page=${pageNo}&per_page=${per_page}&query=${search}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+    )
       .then((res) => {
-        console.log(res);
         setPageNo((p) => p + 1);
-        setPhotos((prev) => [...prev, ...res]);
+        setPhotos((prev) => [...prev, ...res.data.results]);
         setLoading(false);
         setFetchLoading(false);
       })
@@ -56,7 +45,6 @@ function SearchImg() {
   }, [search]);
   return (
     <div>
-      <div>{search}</div>
       <LoadImages
         photos={photos}
         loading={loading}

@@ -7,7 +7,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { IconButton } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import turtleLoader from "../../../assets/loading-turtle.gif";
+import { Typography } from "@mui/material";
+
 function LoadImages(props) {
   const { photos, loading, fetchLoading, setFetchLoading } = props;
   const [selectImage, setSelectImage] = useState(null);
@@ -53,14 +56,25 @@ function LoadImages(props) {
   return (
     <div>
       {loading ? (
-        <div>Loading...</div>
-      ) : !loading && photos.length == 0 ? (
-        <div>No data found</div>
+        <div>
+          <CircularProgress />
+        </div>
+      ) : !loading && photos.length === 0 ? (
+        <div>
+          <img
+            style={{ maxWidth: "500px", margin: "auto", width: "50%" }}
+            src={turtleLoader}
+            alt={"no-data-found"}
+          />
+          <Typography variant="h3"
+           sx={{fontSize:{xs:"1.5rem",sm:"2rem",md:"2.5rem",lg:"3rem",xl:"3.5rem"}}}
+             >Sorry, no results found</Typography>
+        </div>
       ) : (
         <div
           style={{
             maxWidth: "1300px",
-            margin: "auto",
+            margin: "20px auto",
           }}
         >
           <Masonry
@@ -69,9 +83,27 @@ function LoadImages(props) {
             spacing={2}
           >
             {photos.map((item, index) => {
-              let liked=Math.random() > 0.5;
+              let liked = Math.random() > 0.5;
               return (
                 <div onClick={() => openModal(item)} className="container">
+                  <div className="overlay-mobile-title">
+                    <div>
+                      <img
+                        src={item.user.profile_image.small}
+                        alt={item.user.first_name}
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <div
+                        style={{ marginLeft: "10px", fontWeight: "bold" }}
+                      >{`${item.user.first_name} ${item.user.last_name}`}</div>
+                    </div>
+                  </div>
                   <img
                     className="image"
                     style={{
@@ -81,22 +113,51 @@ function LoadImages(props) {
                     src={item.urls.small}
                     alt={item.alt_description}
                   />
-
+                  <div className="overlay-mobile-btn">
+                    <div>
+                      <button
+                        style={{ backgroundColor: liked ? "#f14747" : "#ffff" }}
+                        className="button"
+                        onClick={(e) => likeImage(e)}
+                      >
+                        <FavoriteIcon
+                          sx={{ color: liked ? "white" : "black" }}
+                          fontSize="small"
+                        />
+                      </button>
+                      <button className="button">
+                        <AddIcon fontSize="small" />
+                      </button>
+                    </div>
+                    <button
+                      style={{
+                        backgroundColor: "#ffff",
+                        height: "30px",
+                        border: "1px solid rgba(0, 0, 0, 0.248)",
+                        borderRadius: "5px",
+                        padding: "0px 15px",
+                      }}
+                      onClick={(e) => downloadImage(e, item)}
+                    >
+                      Download
+                    </button>
+                  </div>
                   <div class="overlay">
                     <div className="topoverlay">
                       <div className="topoverlaycontainer">
                         <button
-                        style={{ backgroundColor: liked?"#f14747":'#ffff' }}
+                          style={{
+                            backgroundColor: liked ? "#f14747" : "#ffff",
+                          }}
                           className="button"
                           onClick={(e) => likeImage(e)}
                         >
-                         
-                          <FavoriteIcon sx={{color:liked?'white':'black'}} fontSize="small" />
+                          <FavoriteIcon
+                            sx={{ color: liked ? "white" : "black" }}
+                            fontSize="small"
+                          />
                         </button>
-                        <button
-                          className="button"
-                          onClick={(e) => downloadImage(e, item)}
-                        >
+                        <button className="button">
                           <AddIcon fontSize="small" />
                         </button>
                       </div>
@@ -157,16 +218,11 @@ function LoadImages(props) {
               );
             })}
           </Masonry>
-          {/* <ImagesColumns
-            gridSize={size<768?1:size<1200?2:3}
-            RowStyle={{
-              display: "flex",
-              flexDirection: "column",
-              rowGap: "10px",
-            }}
-            photos={photos}
-          /> */}
-          {fetchLoading && <div>Loading more images...</div>}
+          {fetchLoading && (
+            <div>
+              <CircularProgress />
+            </div>
+          )}
           <div
             style={{
               width: "100%",

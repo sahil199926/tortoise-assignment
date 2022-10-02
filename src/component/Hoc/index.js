@@ -1,5 +1,4 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import "./hoc.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,13 +6,10 @@ import { Toolbar, Grid, Divider, TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
@@ -21,52 +17,14 @@ import { StaticRoutes } from "../../mockdata";
 import { useLocation } from "react-router-dom";
 import useCheckSize from "../../Hooks/useChecksize";
 import logo from "../../assets/logo.png";
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
+import MenuIcon from "@mui/icons-material/Menu";
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
 
 export default function Hoc({ children }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = React.useState("");
   const size = useCheckSize();
   const location = useLocation();
-  console.log(location);
   const catid =
     location.pathname.split("/")[2] || location.pathname.split("/")[1] || "";
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -83,9 +41,6 @@ export default function Hoc({ children }) {
   };
 
   const onCategoryClick = (route) => {
-    // alert(route.value);
-    // alert(catid);
-    // alert(route.value == catid )
     if (route.value === "following") {
       navigate("/following");
     } else if (route.value === "editorial") {
@@ -106,6 +61,10 @@ export default function Hoc({ children }) {
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleMenuOpen = (event) => {
+    
+  }
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -137,8 +96,9 @@ export default function Hoc({ children }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Company</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Product</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Community</MenuItem>
     </Menu>
   );
 
@@ -159,27 +119,22 @@ export default function Hoc({ children }) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+      <MenuItem sx={{ justifyContent: "center" }}>
+        <p>Advertise</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+      <MenuItem sx={{ justifyContent: "center" }}>
+        <p>Blog</p>
+      </MenuItem>
+      <MenuItem sx={{ justifyContent: "center" }}>
+        <p>Submit a photo</p>
+      </MenuItem>
+      <MenuItem sx={{ justifyContent: "center" }}>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem
+        sx={{ justifyContent: "center" }}
+        onClick={handleProfileMenuOpen}
+      >
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -187,9 +142,8 @@ export default function Hoc({ children }) {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <AccountCircle fontSize="large" />
         </IconButton>
-        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -257,55 +211,32 @@ export default function Hoc({ children }) {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              sx={{ borderRadius: "10px" }}
             >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
+              <Typography>Advertise</Typography>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+
             <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              sx={{ borderRadius: "10px" }}
             >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
+              <Typography>Blog</Typography>
             </IconButton>
             <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
+              size="small"
               color="inherit"
+              sx={{ borderRadius: "10px" }}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <Typography>Submit photo</Typography>
+            </IconButton>
+            <IconButton size="small" color="inherit">
+              <NotificationsIcon />
             </IconButton>
             <IconButton
-              size="large"
+              size="small"
               edge="end"
-              aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
@@ -313,7 +244,19 @@ export default function Hoc({ children }) {
             >
               <AccountCircle />
             </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleMenuOpen}
+              color="inherit"
+              sx={{ borderRadius: "10px" }}
+            >
+              <MenuIcon />
+            </IconButton>
           </Box>
+
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

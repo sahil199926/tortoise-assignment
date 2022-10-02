@@ -1,0 +1,22 @@
+.button{
+    font-size: 14px;
+    height: 32px;
+    width: 42px;
+   border:none;
+   border-radius: 5px
+}
+
+.leftoverlaycontainer{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    column-gap: 8px;
+}
+
+.topoverlaycontainer{
+    display: flex;
+    font-size: clamp(10px, 1.5vw, 13px);
+    justify-content: flex-end;
+    column-gap: 10px;
+    padding: 15px;
+}

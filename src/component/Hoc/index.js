@@ -3,8 +3,9 @@ import { styled, alpha } from "@mui/material/styles";
 import "./hoc.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import { Toolbar, Grid, Divider } from "@mui/material";
+import { Toolbar, Grid, Divider, TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
@@ -17,9 +18,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 import { StaticRoutes } from "../../mockdata";
-import {useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import useCheckSize from "../../Hooks/useChecksize";
-
+import logo from "../../assets/logo.png";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -203,46 +204,54 @@ export default function Hoc({ children }) {
         position="sticky"
       >
         <Toolbar>
-          {/* <IconButton
+          <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            MUI
-          </Typography>
-         
-          <Box sx={{ flexGrow: 1 }} >
-          <form onSubmit={(e) => OnSearch(e)}>
-            <Search 
-            sx={{ 
-              backgroundColor: "#eee",
-              width: "100%",
-            }}
-            >
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                width="100%"
+            <img style={{ width: "35px", height: "35px" }} src={logo} />
+          </IconButton>
+
+          <Box component="div" sx={{ flexGrow: 1, borderRadius: "20%" }}>
+            <form onSubmit={(e) => OnSearch(e)}>
+              <TextField
+                sx={{
+                  backgroundColor: "#eee",
+                  width: "100%",
+                  border: "none",
+                  borderRadius: "25px",
+                  "& .css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root": {
+                    borderRadius: "inherit",
+
+                    border: "none",
+                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                      border: "none",
+
+                      borderRadius: "inherit",
+                    },
+                  },
+                }}
+                fullWidth
+                size="small"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search…"
-              
-                inputProps={{ "aria-label": "search" }}
+                InputProps={{
+                  startAdornment: (
+                    <IconButton sx={{ paddingRight: "10px" }}>
+                      <SearchIcon />
+                    </IconButton>
+                  ),
+                  endAdornment: (
+                    <IconButton>
+                      <QrCodeScannerIcon />
+                    </IconButton>
+                  ),
+                }}
               />
-            </Search>
-          </form>
-            </Box>
+            </form>
+          </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
@@ -354,7 +363,7 @@ export default function Hoc({ children }) {
                 </div>
               );
             })}
-            <Divider sx={{height:'80%'}} orientation="vertical" />
+            <Divider sx={{ height: "80%" }} orientation="vertical" />
           </Grid>
           <Grid
             ref={routeRef}
@@ -373,7 +382,6 @@ export default function Hoc({ children }) {
                 <div>
                   {" "}
                   <div
-
                     style={{
                       opacity: route.meta?.featured ? "1" : "0",
                       fontSize: "11px",

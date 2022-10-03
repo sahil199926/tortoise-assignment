@@ -174,17 +174,13 @@ export default function Hoc({ children }) {
                 sx={{
                   backgroundColor: "#eee",
                   width: "100%",
-                  border: "none",
                   borderRadius: "25px",
                   "& .css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root": {
                     borderRadius: "inherit",
-
-                    border: "none",
-                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-                      border: "none",
-
+                    '& fieldset': {
+                      border: 'none',
                       borderRadius: "inherit",
-                    },
+                    }
                   },
                 }}
                 fullWidth

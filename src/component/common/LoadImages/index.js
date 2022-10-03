@@ -50,7 +50,6 @@ function LoadImages(props) {
   };
   const favoriteImage = (e, item) => {
     e.stopPropagation();
-
     alert("favorite");
   };
   return (

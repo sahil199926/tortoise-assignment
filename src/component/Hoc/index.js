@@ -175,7 +175,7 @@ export default function Hoc({ children }) {
                   backgroundColor: "#eee",
                   width: "100%",
                   borderRadius: "25px",
-                  "& .css-1gywuxd-MuiInputBase-root-MuiOutlinedInput-root": {
+                  "& div": {
                     borderRadius: "inherit",
                     '& fieldset': {
                       border: 'none',
